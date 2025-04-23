@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>B4B07作業09</title>
+	<style>
+		h4 {
+			color: red;
+		}
+
+		div {
+		    color: blue;
+		    margin: 5px;
+		}
+	</style>
+</head>
+<body>
+<form id="form01">
+	姓名:<input type="text"name="name01" value="陳宣羽"><br>
+	收件住址:<input type="text"name="address01" value="台北市中山區德惠街3巷3號"><br>
+	電話:<input type="tel"name="tel01" value="0908503227"><br>
+	電子郵件:<input type="email"name="email01" value="xy011223@gmail.com"><br>
+	指定送貨日期:<input type="date"name="date01"><br>
+	水果種類:<br><input type="checkbox" name="fruit" id="fruit01" value="枋山愛文芒果(大果)5台斤">枋山愛文芒果(大果)5台斤 795元;
+	購買數量:<input type= "number" name="number01"><br>
+	<input type="checkbox"name="fruit" id="fruit02" value="大樹尤爸產銷履歷玉荷包(5台斤)">大樹尤爸產銷履歷玉荷包(5台斤) 1080元;
+	購買數量:<input type= "number" name="number02"><br>
+	<input type="checkbox"name="fruit" id="fruit03" value="拉拉山洪家水蜜桃(10粒裝)">拉拉山洪家水蜜桃(10粒裝) 880元;
+	購買數量:<input type= "number" name="number03"><br>
+	<input type="checkbox"name="fruit" id="fruit04" value="嘉義極光哈密瓜(2顆)">嘉義極光哈密瓜(2顆) 1099元;
+	購買數量:<input type= "number" name="number04"><br>
+</form>
+<button onclick="shoppingInfo()"><h4>結帳</h4></button>
+<div id="demo"></div>
+<script>
+		var text = "<h4>您的購物資訊如下:</h4>";
+		var fruit = function(fruitType, fruitPrice, no){
+			this.Type = fruitType;
+			this.Price = fruitPrice;
+			this.No = no;
+			this.subTotal = function(no){
+				text += "水果種類: " + this.Type + "; 共 " + this.No + " 單位<br>";
+				text += "價格小計: " + this.Price * this.No + " 元<br>";
+			};
+		};
+		var fruit01 = new fruit("枋山愛文芒果(大果)5台斤",795,0)
+		var fruit02 = new fruit("大樹尤爸產銷履歷玉荷包(5台斤)",1080,0)
+		var fruit03 = new fruit("拉拉山洪家水蜜桃(10粒裝)",880,0)
+		var fruit04 = new fruit("嘉義極光哈密瓜(2顆)",1099,0)
+
+	function shoppingInfo(){
+ 	    var x = document.getElementById("form01");
+ 	    var item = "";
+ 	    var sumToPay=0;
+ 	    var i;
+ 	    for (i = 0; i < 5; i++) {
+            switch (i) {
+                  case 0:
+                      item = "姓名: ";
+                      break;
+                  case 1:
+                      item = "收件住址: ";
+                      break;
+                  case 2:
+                      item = "電話: ";
+                      break;
+                  case 3:
+                      item = "電子郵件: ";
+                      break;
+                  case 4:
+                      item = "指定送貨日期: ";
+                      break;
+              }
+              text += item + x.elements[i].value + "<br>";
+          }
+          for (i = 5; i <= 11; i++) {
+              if (x.elements[i].checked === true) {
+                  switch (i) {
+                      case 5: fruit01.No=x.elements[i+1].value;
+                        sumToPay += fruit01.Price * fruit01.No;
+                        fruit01.subTotal(fruit01.No);
+                        break;
+                      case 7: fruit02.No=x.elements[i+1].value;
+                        sumToPay += fruit02.Price * fruit02.No;
+                        fruit02.subTotal(fruit02.No);
+                        break;
+                      case 9: fruit03.No=x.elements[i+1].value;
+                        sumToPay += fruit03.Price * fruit03.No;
+                        fruit03.subTotal(fruit03.No);
+                        break;
+                      case 11: fruit04.No=x.elements[i+1].value;
+                        sumToPay += fruit04.Price * fruit04.No;
+                        fruit04.subTotal(fruit04.No);
+                        break;
+                  }
+          	  }
+          }
+          text += "價格合計: " + sumToPay + "元<br>";
+          document.getElementById("demo").innerHTML = text;
+    }
+</script>
+</body>
+</html>
